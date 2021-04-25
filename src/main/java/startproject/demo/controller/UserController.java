@@ -28,6 +28,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity getAllUsers() {
+        try {
+            return ResponseEntity.ok(userService.getAllUsers());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Users were not found");
+        }
+    }
+
     @GetMapping
     public ResponseEntity getOneUser(@RequestParam Long id) {
         try {
