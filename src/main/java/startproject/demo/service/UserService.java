@@ -1,9 +1,6 @@
 package startproject.demo.service;
 
-import org.hibernate.mapping.Any;
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import startproject.demo.entity.UserEntity;
 import startproject.demo.exeption.UserAlreadyExistException;
@@ -11,7 +8,7 @@ import startproject.demo.exeption.UserNotFoundException;
 import startproject.demo.model.User;
 import startproject.demo.repository.UserRepo;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -34,14 +31,13 @@ public class UserService {
         return User.toModel(user);
     }
 
-    public Iterator<UserEntity> getAllUsers() {
-        Iterator<UserEntity> users = userRepo.findAll().iterator();
-        // UserEntity newUserData = [];
-        // for (int i = 0; i<users.length; i++) {
-        //
-        // }
-        System.out.println(users);
-        return users;
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> publicUsers = new ArrayList<>();
+
+        for (UserEntity userEntity : userRepo.findAll())
+            publicUsers.add(User.toModel(userEntity));
+
+        return publicUsers;
     }
 
     public Long deleteUser(Long id) {
